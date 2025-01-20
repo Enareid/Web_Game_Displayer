@@ -6,16 +6,26 @@
 	<meta charset="UTF-8"/>
 	<title>Game displayer</title>
     <link rel="stylesheet" href="style/stylesheet.css">
+    <script src="./scripts/script.js"></script>
 </head>
 
 <body>
-    <table width="400" height="400">
-        <div id="DiceRoll">
-            <div id="FirstDice"></div>
-            <div id="SecondDice"></div>
-            <div id="ThirdDice"></div>
-            <div id="FourthDice"></div> 
-        </div>
+    <div id="DiceRoll">
+        <div id="FirstDice"><img src="./graphics/highway-curve.png" alt=""></div>
+        <div id="SecondDice"><img src="./graphics/station-straight.png" alt=""></div>
+        <div id="ThirdDice"><img src="./graphics/railway-straight.png" alt=""></div>
+        <div id="FourthDice"><img src="./graphics/overpass.png" alt=""></div> 
+    </div>
+    <div id="SpecialRoad">
+        <div id="HighwayCross"><img src="./graphics/highway-cross.png" alt=""></div>
+        <div id="railwayCross"><img src="./graphics/railway-cross.png" alt=""></div>
+        <div id="stationCross"><img src="./graphics/station-cross.png" alt=""></div>
+        <div id="stationHighwayJunction"><img src="./graphics/station-highway-junction.png" alt=""></div>
+        <div id="stationRailwayJunction"><img src="./graphics/station-railway-junction.png" alt=""></div>
+        <div id="stationReflect"><img src="./graphics/station-reflect.png" alt=""></div>
+    </div>
+    <button id="rotateButton">Rotate</button>
+    <table id="board" width="400" height="400">
         <tbody>
            <!---- <tr>
                 <th scope="col">test</th>
@@ -27,107 +37,108 @@
                 <th scope="col"></th>
             </tr>-->
             <tr id="Eight" >
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"><img src="./graphics/ROAD_NORTH.png" alt=""></td>
-                <td id="Border"></td>
-                <td id="Border"><img src="./graphics/RAIL_NORD.png" alt=""></td>
-                <td id="Border"></td>
-                <td id="Border"><img src="./graphics/ROAD_NORTH.png" alt=""></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="./graphics/ROAD_NORTH.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="./graphics/RAIL_NORD.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="./graphics/ROAD_NORTH.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"></td>
             </tr>
             <tr id="Seven" >
-                <td id="Border"></td>
-                <td id="A" >A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"></td>
             </tr>
             <tr id="Six">
-                <td id="Border"></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"><img src="./graphics/RAIL_WEST.png" alt=""></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"><img src="./graphics/RAIL_EAST.png" alt=""></td>
             </tr>
             <tr id="Five">
-                <td id="Border"></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"></td>
             </tr>
             <tr id="Four">
-                <td id="Border"><img src="./graphics/ROAD_WEST.png" alt=""></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
+                <td id="BorderLeft"><img src="./graphics/ROAD_WEST.png" alt=""></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
                 <td id="D"></td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"><img src="./graphics/ROAD_EAST.png" alt=""></td>
             </tr>
             <tr id="Three">
-                <td id="Border"></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"></td>
             </tr>
 
             <tr id="Two">
-                <td id="Border"></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"><img src="./graphics/RAIL_WEST.png" alt=""></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"><img src="./graphics/RAIL_EAST.png" alt=""></td>
             </tr>
             <tr id="One">
-                <td id="Border"></td>
-                <td id="A">A</td>
-                <td id="B">B</td>
-                <td id="C">C</td>
-                <td id="D">D</td>
-                <td id="E">E</td>
-                <td id="F">F</td>
-                <td id="G">G</td>
-                <td id="Border"></td>
+                <td id="BorderLeft"></td>
+                <td id="A"></td>
+                <td id="B"></td>
+                <td id="C"></td>
+                <td id="D"></td>
+                <td id="E"></td>
+                <td id="F"></td>
+                <td id="G"></td>
+                <td id="BorderRight"></td>
             </tr>
             <tr id="Zero">
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
-                <td id="Border"></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="./graphics/ROAD_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="./graphics/RAIL_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="./graphics/ROAD_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"></td>
             </tr>
         </tbody>
     </table>
+    
 </body>
 
 </html>
