@@ -1,60 +1,115 @@
 table {
-    background-size: 100%;
-    background-repeat: no-repeat;
-    border-collapse: collapse;
-    font-family: sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    margin-left: auto;
-    margin-right: auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-td#Border {
-    text-align: center;
-    position: relative;
-    margin: 0 auto;
-    padding: 5px;
-    border: none;
+td#BorderTop, td#BorderLeft, td#BorderBottom, td#BorderRight {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 5px;
+  border: none;
 }
 
-td#Border img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+td#BorderTop img {
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+height: 50%;
+}
+
+td#BorderRight img {
+position: absolute;
+top:  0;
+left: 0;
+right: 50%;
+width: 50%;
+height: 100%;
+}
+
+td#BorderLeft img {
+position: absolute;
+top:  0;
+left: 50%;
+width: 50%;
+height: 100%;
+}
+
+td#BorderBottom img {
+position: absolute;
+top:  0;
+left: 0;
+width: 100%;
+height: 50%;
 }
 
 td img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
 }
 
 tr#Five td#C, tr#Five td#D, tr#Five td#E{
-  border-top: 2px solid gray;
+border-top: 2px solid gray;
 }
 
 tr#Three td#C, tr#Three td#D, tr#Three td#E{
-  border-bottom: 2px solid gray;
+border-bottom: 2px solid gray;
 }
 
 tr#Three td#C, tr#Four td#C, tr#Five td#C{
-  border-left: 2px solid gray;
+border-left: 2px solid gray;
 }
 
 tr#Three td#E, tr#Four td#E, tr#Five td#E{
-  border-right: 2px solid gray;
+border-right: 2px solid gray;
 }
-  
+
+
 td  {
-    text-align: center;
-    position: relative;
-    margin: 0 auto;
-    border: 1px solid gray;
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid gray;
 }
 
+#DiceRoll img , #SpecialRoad img{
+top: 0;
+left: 0;
+width: 5%;
+height: 5%;
+}
 
-  
+#DiceRoll {
+height: 0px;
+}
+#SpecialRoad {
+position: relative;
+height: 0px; 
+left: 50px;
+}
+img {
+  transform-origin: center;
+  transition: transform 0.3s ease; /* Optionnel : ajoute une animation fluide */
+}
+
+.selected {
+  border: 2px solid red;
+}
+
+#rotateButton {
+  position: fixed; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  border-radius: 5px;
+  cursor: pointer;
+}
