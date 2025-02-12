@@ -1,0 +1,47 @@
+<svg viewBox="0 0 256 256" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<style>
+  * {
+    stroke-width: 6;
+  }
+  .tile {
+    stroke: #666;
+  }
+  .road, .rail, .bridge {
+    stroke-linecap: round;
+    stroke: black;
+    fill: none;
+  }
+  .station {
+    stroke-linejoin: round;
+    stroke: black;
+    fill: black;
+  }
+</style>
+
+<g class="tile">
+<rect width="244" height="244" x="6" y="6" rx="18" fill="white"/>
+</g>
+<g class="road">
+<path style="stroke-dasharray:18,21; stroke-dashoffset:-11" d="        M 128 9
+        V 247
+        M 128 128
+        H 247
+"/>
+<path d="        M 111 9
+        V 247
+        M 145 247
+        V 145
+        H 247
+        M 145 9
+        V 111
+        H 247
+"/>
+</g>
+<g class="rail">
+<line x1="128" x2="-119" y1="128" y2="128"/>
+<line x1="94.0" x2="94.0" y1="111" y2="145"/>
+<line x1="60.0" x2="60.0" y1="111" y2="145"/>
+<line x1="26.0" x2="26.0" y1="111" y2="145"/>
+</g>
+<rect class="station" x="111" y="111" width="34" height="34"/>
+</svg>

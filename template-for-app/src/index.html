@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title>Game displayer</title>
+    <link rel="stylesheet" href="style/stylesheet.css">
+    <link rel="stylesheet" href="style/chat.css">
+    <link rel="stylesheet" href="style/board-displayer.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./scripts/ioClient.js"></script>
+    <script src="./scripts/game.js" type="module" defer></script>
+
+</head>
+
+<body>
+    <div id="dices">
+        <div id="DiceRoll">
+            <div id="FirstDice"><img src="images/Hc.png" alt=""></div>
+            <div id="SecondDice"><img src="images/S.png" alt=""></div>
+            <div id="ThirdDice"><img src="images/R.png" alt=""></div>
+            <div id="FourthDice"><img src="images/HR.png" alt=""></div> 
+        </div>
+        <div id="SpecialRoad">
+            <div id="HighwayCross"><img src="images/HH.png" alt=""></div>
+            <div id="railwayCross"><img src="images/RR.png" alt=""></div>
+            <div id="stationCross"><img src="images/SS.png" alt=""></div>
+            <div id="stationHighwayJunction"><img src="images/SHR.png" alt=""></div>
+            <div id="stationRailwayJunction"><img src="images/SR.png" alt=""></div>
+            <div id="stationReflect"><img src="images/SH.png" alt=""></div>
+        </div>
+    </div>
+    <button id="rotateButton">Rotate</button>
+    <button id="flipButton">Flip</button>
+    <button id="validate">Validate</button>
+    <table id="board" width="400" height="400">
+        <tbody>
+           <!---- <tr>
+                <th scope="col">test</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>-->
+            <tr id="Eight">
+                <td id="BorderTop"></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="images/ROAD_NORTH.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="images/RAIL_NORD.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"><img src="images/ROAD_NORTH.png" alt=""></td>
+                <td id="BorderTop"></td>
+                <td id="BorderTop"></td>
+            </tr>
+            <tr id="Seven">
+                <td id="BorderLeft"></td>
+                <td id="A7" class="playableTile"></td>
+                <td id="B7" class="playableTile"></td>
+                <td id="C7" class="playableTile"></td>
+                <td id="D7" class="playableTile"></td>
+                <td id="E7" class="playableTile"></td>
+                <td id="F7" class="playableTile"></td>
+                <td id="G7" class="playableTile"></td>
+                <td id="BorderRight"></td>
+            </tr>
+            <tr id="Six">
+                <td id="BorderLeft"><img src="images/RAIL_WEST.png" alt=""></td>
+                <td id="A6" class="playableTile"></td>
+                <td id="B6" class="playableTile"></td>
+                <td id="C6" class="playableTile"></td>
+                <td id="D6" class="playableTile"></td>
+                <td id="E6" class="playableTile"></td>
+                <td id="F6" class="playableTile"></td>
+                <td id="G6" class="playableTile"></td>
+                <td id="BorderRight"><img src="images/RAIL_EAST.png" alt=""></td>
+            </tr>
+            <tr id="Five">
+                <td id="BorderLeft"></td>
+                <td id="A5" class="playableTile"></td>
+                <td id="B5" class="playableTile"></td>
+                <td id="C5" class="playableTile"></td>
+                <td id="D5" class="playableTile"></td>
+                <td id="E5" class="playableTile"></td>
+                <td id="F5" class="playableTile"></td>
+                <td id="G5" class="playableTile"></td>
+                <td id="BorderRight"></td>
+            </tr>
+            <tr id="Four">
+                <td id="BorderLeft"><img src="images/ROAD_WEST.png" alt=""></td>
+                <td id="A4" class="playableTile"></td>
+                <td id="B4" class="playableTile"></td>
+                <td id="C4" class="playableTile"></td>
+                <td id="D4" class="playableTile"></td>
+                <td id="E4" class="playableTile"></td>
+                <td id="F4" class="playableTile"></td>
+                <td id="G4" class="playableTile"></td>
+                <td id="BorderRight"><img src="images/ROAD_EAST.png" alt=""></td>
+            </tr>
+            <tr id="Three">
+                <td id="BorderLeft"></td>
+                <td id="A3" class="playableTile"></td>
+                <td id="B3" class="playableTile"></td>
+                <td id="C3" class="playableTile"></td>
+                <td id="D3" class="playableTile"></td>
+                <td id="E3" class="playableTile"></td>
+                <td id="F3" class="playableTile"></td>
+                <td id="G3" class="playableTile"></td>
+                <td id="BorderRight"></td>
+            </tr>
+
+            <tr id="Two">
+                <td id="BorderLeft"><img src="images/RAIL_WEST.png" alt=""></td>
+                <td id="A2" class="playableTile"></td>
+                <td id="B2" class="playableTile"></td>
+                <td id="C2" class="playableTile"></td>
+                <td id="D2" class="playableTile"></td>
+                <td id="E2" class="playableTile"></td>
+                <td id="F2" class="playableTile"></td>
+                <td id="G2" class="playableTile"></td>
+                <td id="BorderRight"><img src="images/RAIL_EAST.png" alt=""></td>
+            </tr>
+            <tr id="One">
+                <td id="BorderLeft"></td>
+                <td id="A1" class="playableTile"></td>
+                <td id="B1" class="playableTile"></td>
+                <td id="E1" class="playableTile"></td>
+                <td id="C1" class="playableTile"></td>
+                <td id="D1" class="playableTile"></td>
+                <td id="F1" class="playableTile"></td>
+                <td id="G1" class="playableTile"></td>
+                <td id="BorderRight"></td>
+            </tr>
+            <tr id="Zero">
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="images/ROAD_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="images/RAIL_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"><img src="images/ROAD_SOUTH.png" alt=""></td>
+                <td id="BorderBottom"></td>
+                <td id="BorderBottom"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="cmd-container">
+        <div id="cmd-display"></div>
+    </div>
+    <div id="chat-container">
+        <div id="chat-display"></div>
+        <input id="chat-input" type="text" placeholder="Type your message here">
+        <button id="chat-send">Send</button>
+    </div>
+    <div id="boards-container">
+        <div id="boards-display" ></div>
+    </div>
+
+
+
+
+</body></html>

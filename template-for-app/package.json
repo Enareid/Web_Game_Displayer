@@ -1,0 +1,16 @@
+{
+  "name": "second",
+  "version": "1.0.0",
+  "description": "introduction to socket.io",
+  "type": "module",
+  "main": "./src/scripts/main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Jean-Christophe Routier",
+  "license": "ISC",
+  "dependencies": {
+    "prompt-sync": "^4.2.0",
+    "socket.io": "^4.4.0"
+  }
+}
