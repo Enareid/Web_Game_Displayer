@@ -76,13 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Ajoute l'image sélectionnée dans la cellule cliquée
                 cell.innerHTML = ""; // Supprime tout contenu existant dans la cellule
                 cell.appendChild(selectedImage);
-                console.log(selectedImage);
-                console.log(getIdFromSrc(selectedImage));
                 sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ cell.id)
 
                 // Retire la sélection de l'image après son placement
                 selectedImage.classList.remove("selected");
                 selectedImage = null;
+                socket.emit('update board',getBoard(),id);
             }
         });
     });

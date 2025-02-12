@@ -2,6 +2,8 @@ const socket = io();
 
 let id = "";
 
+let valid = false;
+
 let websocket = null;
 
 let messageHandler = null;
@@ -10,6 +12,17 @@ socket.on('identification',() => connect());
 socket.on('chat message',(msg)=> displayMessageChat(msg));
 socket.on('send board', (socket1) => socket.emit('sended board',getBoard(),socket1, id));
 socket.on('print board', (board, id) => displayBoard(board, id));
+
+socket.on('sended update board',(board,id) => displayUpdatedBoard(board,id));
+
+function displayUpdatedBoard(board,id){
+    if (valid){
+        const idBoard = document.getElementById(id);
+        if(idBoard){
+            displayBoard(board,id);
+        }
+    }
+}
 
 function getBoard() {
     let b = document.getElementById("board").innerHTML;
@@ -30,19 +43,21 @@ function connect() {
 document.addEventListener("DOMContentLoaded",() => {
     const validate = document.getElementById("validate");
     const boardsDisplay = document.getElementById('boards-display');
-    validate.addEventListener("click",()=> {   
-        boardsDisplay.innerHTML = "";   
+    validate.addEventListener("click",()=> {  
         socket.emit("view board",socket.id)
+        valid = true;
         });
 });
 
 function displayBoard(board, id){
     if(board != getBoard()){
         const boardsDisplay = document.getElementById("boards-display");
+        boardsDisplay.innerHTML = "";   
         const boardName = document.createElement("div");
         const boardAdded = document.createElement("table");
         boardName.textContent = id + ' : ';
-        boardAdded.id = `board-`;
+        boardAdded.id = id;
+        boardAdded.className = "board-";
         boardAdded.innerHTML = board;
         boardsDisplay.appendChild(boardName);
         boardsDisplay.appendChild(boardAdded);
@@ -55,6 +70,7 @@ function displayMessageChat(message){
     messageElement.className = "player-message";
     messageElement.textContent = `${message}`;
     chatDisplay.appendChild(messageElement);
+    chatDisplay.scrollTop = chatDisplay.scrollHeight;
 }
 
 function displayMessage(message) {
@@ -63,6 +79,7 @@ function displayMessage(message) {
     messageElement.className = "player-message";
     messageElement.textContent = `${message}`;
     cmdDisplay.appendChild(messageElement);
+    cmdDisplay.scrollTop = cmdDisplay.scrollHeight;
 };
 
 document.addEventListener('DOMContentLoaded',()=>{
