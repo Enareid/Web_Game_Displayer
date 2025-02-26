@@ -1,3 +1,10 @@
+import PlacementHandler from "../../node_modules/@raphael-levecque/placement-handler-railroad/placementHandler.js";
+
+const ph = new PlacementHandler();
+
+let PossiblePlacement = [];
+
+
 document.addEventListener("DOMContentLoaded", () => {
     let selectedImage = null; // Variable pour stocker l'image sélectionnée
     let currentRotation = 0; // Variable pour suivre l'angle de rotation
@@ -27,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Marque l'image cliquée comme sélectionnée
             selectedImage = event.target;
             selectedImage.classList.add("selected");
+            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
+            console.log(PossiblePlacement);
         });
     });
 
@@ -107,6 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Applique la transformation CSS pour pivoter l'image
             selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
+            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
+            console.log(PossiblePlacement);
         }
     }
 
@@ -117,6 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Applique la tranformation CSS pour pivoter l'image
             selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
+            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
+            console.log(PossiblePlacement);
         }
     }
     
