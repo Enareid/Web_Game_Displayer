@@ -1,25 +1,24 @@
 #boards-container{
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #fff;
-    display: flex;
-    flex-direction: row;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
   position :absolute; 
-    display: table-row;
-    bottom: 0px;
-    height: 150px;
-    top: 430px;
-    left: 230px;
+  display: table-row;
+  bottom: 100px;
+  height: 150px;
+  left: 230px;
 }
 #boards-display{
- display:flex;
-  flex-direction: row;
-  top: 0px;
-  height: 230px;
+display:flex;
+flex-direction: row;
+top: 0px;
+height: 230px;
 }
 .board-{
-  width: 150px;
-  height: 150px;
+width: 150px;
+height: 150px;
 }

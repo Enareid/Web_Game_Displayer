@@ -7,9 +7,10 @@
   "scripts": {
     "start": "node main.js"
   },
-  "author": "Jean-Christophe Routier",
+  "author": "Les Informaticiens de l'informatique",
   "license": "ISC",
   "dependencies": {
+    "@raphael-levecque/placement-handler-railroad": "^1.0.0",
     "prompt-sync": "^4.2.0",
     "socket.io": "^4.4.0"
   }

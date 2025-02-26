@@ -8,6 +8,8 @@ let websocket = null;
 
 let messageHandler = null;
 
+let alphaExp = /^[a-zA-z0-9]+$/;
+
 socket.on('identification',() => connect());
 socket.on('chat message',(msg)=> displayMessageChat(msg));
 socket.on('send board', (socket1) => socket.emit('sended board',getBoard(),socket1, id));
@@ -32,14 +34,14 @@ function getBoard() {
 function connect() {
     websocket = new WebSocket('ws://localhost:3000');
     websocket.onopen = () => {
-        while (id == "") {
+        while (id == "" || id == null || !id.match(alphaExp)) {
             id = prompt("Enter your id", id);
         }
         console.log('Connected to server');
         sendCommand(`ENTERS`);
     }
     websocket.onerror = () => {
-        while (id == "") {
+        while (id == "" || id == null) {
             id = prompt("Enter your id", id);
         }
     }
