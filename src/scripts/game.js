@@ -14,34 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Gérer le clic sur les images dans les divs de DiceRoll
     const diceImages = document.querySelectorAll("#DiceRoll img,#SpecialRoad img");
     diceImages.forEach(img => {
-        img.addEventListener("click", (event) => {
-            // Si une image est déjà sélectionnée, désélectionne-la
-            if (selectedImage) {
-                selectedImage.classList.remove("selected");
-            }
-            // Remets à 0 si l'image est null
-            if (selectedImage == null) {
-                currentRotation = 0;
-                currentFlip = 1;
-            }
-
-            // Réinitialise la rotation de l'image précédemment sélectionnée
-            while(currentRotation != 0) {
-                rotateImage();
-            }
-            while(currentFlip != 1) {
-                flipImage();
-            }
-            // Marque l'image cliquée comme sélectionnée
-            selectedImage = event.target;
-            selectedImage.classList.add("selected");
-            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
-            console.log(PossiblePlacement);
-            updateStyle();
-            PossiblePlacement.forEach(tile => {
-                modifStyle(tile);
-            });
-        });
+        img.addEventListener("click", click);
     });
 
     function getIdFromSrc(image) {
@@ -134,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tileElement.style.backgroundColor = "lightgreen";
         tileElement.classList.add("possiblePlacement");
         // Gérer le clic sur les balises td de la table
-        tileElement.addEventListener("click", click);
+        tileElement.addEventListener("click", place);
     }
 
     function updateStyle() {
@@ -142,11 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
         allPossiblePlacement.forEach(tile => {
             tile.style.backgroundColor = "white";
             tile.classList.remove("possiblePlacement");
-            tile.removeEventListener("click", click);
+            tile.removeEventListener("click", place);
         });
+        selectedImage.removeEventListener("click", click);
     }
     
-    function click() {
+    function place() {
                 // Vérifie si une image est sélectionnée
                 if (selectedImage) {
                     // Ajoute l'image sélectionnée dans la cellule cliquée
@@ -160,6 +134,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));  
                 selectedImage = null;
+    }
+
+    function click() {
+                    // Si une image est déjà sélectionnée, désélectionne-la
+                    if (selectedImage) {
+                        selectedImage.classList.remove("selected");
+                    }
+                    // Remets à 0 si l'image est null
+                    if (selectedImage == null) {
+                        currentRotation = 0;
+                        currentFlip = 1;
+                    }
+        
+                    // Réinitialise la rotation de l'image précédemment sélectionnée
+                    while(currentRotation != 0) {
+                        rotateImage();
+                    }
+                    while(currentFlip != 1) {
+                        flipImage();
+                    }
+                    // Marque l'image cliquée comme sélectionnée
+                    selectedImage = event.target;
+                    selectedImage.classList.add("selected");
+                    PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
+                    console.log(PossiblePlacement);
+                    updateStyle();
+                    PossiblePlacement.forEach(tile => {
+                        modifStyle(tile);
+                    });
     }
 
 });
