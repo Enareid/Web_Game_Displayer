@@ -1,6 +1,7 @@
 import PlacementHandler from "../../node_modules/@raphael-levecque/placement-handler-railroad/placementHandler.js";
 
 const ph = new PlacementHandler();
+ph.addThrow(["S","R"]);
 
 let PossiblePlacement = [];
 
@@ -36,6 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedImage.classList.add("selected");
             PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
             console.log(PossiblePlacement);
+            updateStyle();
+            PossiblePlacement.forEach(tile => {
+                modifStyle(tile);
+            });
         });
     });
 
@@ -76,24 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Gérer le clic sur les balises td de la table
-    const tableCells = document.querySelectorAll("td.playableTile");
-    tableCells.forEach(cell => {
-        cell.addEventListener("click", () => {
-            // Vérifie si une image est sélectionnée
-            if (selectedImage) {
-                // Ajoute l'image sélectionnée dans la cellule cliquée
-                cell.innerHTML = ""; // Supprime tout contenu existant dans la cellule
-                cell.appendChild(selectedImage);
-                sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ cell.id)
-
-                // Retire la sélection de l'image après son placement
-                selectedImage.classList.remove("selected");
-                selectedImage = null;
-                socket.emit('update board',getBoard(),id);
-            }
-        });
-    });
 
     // Gérer le clic sur le bouton "Rotate"
     const rotateButton = document.getElementById("rotateButton");
@@ -117,7 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Applique la transformation CSS pour pivoter l'image
             selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
             PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
-            console.log(PossiblePlacement);
+            updateStyle();
+            PossiblePlacement.forEach(tile => {
+                modifStyle(tile);
+            });
         }
     }
 
@@ -128,10 +118,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Applique la tranformation CSS pour pivoter l'image
             selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
+            console.log(getIdFromSrc(selectedImage));
+            console.log(getRotationNomenclature(currentRotation, currentFlip));
             PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
             console.log(PossiblePlacement);
+            updateStyle();
+            PossiblePlacement.forEach(tile => {
+                modifStyle(tile);
+            });
         }
     }
+
+    function modifStyle(tile) {
+        const tileElement = document.getElementById(tile);
+        tileElement.style.backgroundColor = "lightgreen";
+        tileElement.classList.add("possiblePlacement");
+        // Gérer le clic sur les balises td de la table
+        tileElement.addEventListener("click", click);
+    }
+
+    function updateStyle() {
+        const allPossiblePlacement = document.querySelectorAll(".possiblePlacement");
+        allPossiblePlacement.forEach(tile => {
+            tile.style.backgroundColor = "white";
+            tile.classList.remove("possiblePlacement");
+            tile.removeEventListener("click", click);
+        });
+    }
     
+    function click() {
+                // Vérifie si une image est sélectionnée
+                if (selectedImage) {
+                    // Ajoute l'image sélectionnée dans la cellule cliquée
+                    this.innerHTML = ""; // Supprime tout contenu existant dans la cellule
+                    this.appendChild(selectedImage);
+                    sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ this.id)
+
+                    // Retire la sélection de l'image après son placement
+                    selectedImage.classList.remove("selected");
+                    socket.emit('update board',getBoard(),id);
+                }
+                ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));  
+                selectedImage = null;
+    }
 
 });
