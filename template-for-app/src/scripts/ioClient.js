@@ -32,9 +32,16 @@ function getBoard() {
 function connect() {
     websocket = new WebSocket('ws://localhost:3000');
     websocket.onopen = () => {
-        id = prompt("Enter your id", id);
+        while (id == "") {
+            id = prompt("Enter your id", id);
+        }
         console.log('Connected to server');
         sendCommand(`ENTERS`);
+    }
+    websocket.onerror = () => {
+        while (id == "") {
+            id = prompt("Enter your id", id);
+        }
     }
     websocket.onmessage = (event) => {
         displayMessage(event.data);
