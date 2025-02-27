@@ -117,52 +117,53 @@ document.addEventListener("DOMContentLoaded", () => {
             tile.classList.remove("possiblePlacement");
             tile.removeEventListener("click", place);
         });
-        selectedImage.removeEventListener("click", click);
     }
     
     function place() {
-                // Vérifie si une image est sélectionnée
-                if (selectedImage) {
-                    // Ajoute l'image sélectionnée dans la cellule cliquée
-                    this.innerHTML = ""; // Supprime tout contenu existant dans la cellule
-                    this.appendChild(selectedImage);
-                    sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ this.id)
+        // Vérifie si une image est sélectionnée
+        if (selectedImage) {
+        // Ajoute l'image sélectionnée dans la cellule cliquée
+            this.innerHTML = ""; // Supprime tout contenu existant dans la cellule
+            this.appendChild(selectedImage);
+            sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ this.id)
 
-                    // Retire la sélection de l'image après son placement
-                    selectedImage.classList.remove("selected");
-                    socket.emit('update board',getBoard(),id);
-                }
-                ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));  
-                selectedImage = null;
+            // Retire la sélection de l'image après son placement
+            selectedImage.classList.remove("selected");
+            socket.emit('update board',getBoard(),id);
+            selectedImage.removeEventListener("click", click); 
+        }
+        ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip)); 
+        selectedImage = null;
     }
 
     function click() {
-                    // Si une image est déjà sélectionnée, désélectionne-la
-                    if (selectedImage) {
-                        selectedImage.classList.remove("selected");
-                    }
-                    // Remets à 0 si l'image est null
-                    if (selectedImage == null) {
-                        currentRotation = 0;
-                        currentFlip = 1;
-                    }
+        // Si une image est déjà sélectionnée, désélectionne-la
+        if (selectedImage) {
+            selectedImage.classList.remove("selected");
+        }
+        // Remets à 0 si l'image est null
+        if (selectedImage == null) {
+            currentRotation = 0;
+            currentFlip = 1;
+        }
         
-                    // Réinitialise la rotation de l'image précédemment sélectionnée
-                    while(currentRotation != 0) {
-                        rotateImage();
-                    }
-                    while(currentFlip != 1) {
-                        flipImage();
-                    }
-                    // Marque l'image cliquée comme sélectionnée
-                    selectedImage = event.target;
-                    selectedImage.classList.add("selected");
-                    PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
-                    console.log(PossiblePlacement);
-                    updateStyle();
-                    PossiblePlacement.forEach(tile => {
-                        modifStyle(tile);
-                    });
+        // Réinitialise la rotation de l'image précédemment sélectionnée
+        while(currentRotation != 0) {
+            rotateImage();
+        }
+        while(currentFlip != 1) {
+            flipImage();
+        }
+        // Marque l'image cliquée comme sélectionnée
+        selectedImage = event.target;
+        selectedImage.classList.add("selected");
+        PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
+        console.log(PossiblePlacement);
+        updateStyle();
+        PossiblePlacement.forEach(tile => {
+            modifStyle(tile);
+        });
+
     }
 
 });
