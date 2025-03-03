@@ -131,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedImage.classList.remove("selected");
             socket.emit('update board',getBoard(),id);
             selectedImage.removeEventListener("click", click); 
+            updateStyle();
         }
         ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip)); 
         selectedImage = null;
