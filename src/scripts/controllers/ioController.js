@@ -33,11 +33,11 @@ export default class IOController { // Server
     }
 
     updateBoard(socket){
-      socket.on('update board',(board,id) =>{ console.log("test"
-      );this.#io.emit('sended update board',board,id)})
+      socket.on('update board',(board,id) =>{this.#io.emit('sended update board',board,id)})
     }
 
     leave(socket) {
+        console.log(`disconnection with ${socket.id}`);
         this.#clients.splice(this.#clients.indexOf(socket),1);
     }
 

@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(getIdFromSrc(selectedImage));
             console.log(getRotationNomenclature(currentRotation, currentFlip));
             PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
-            console.log(PossiblePlacement);
             updateStyle();
             PossiblePlacement.forEach(tile => {
                 modifStyle(tile);
