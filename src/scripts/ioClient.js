@@ -42,7 +42,7 @@ function connect() {
     }
     websocket.onerror = () => {
         while (id == "" || id == null) {
-            id = prompt("Enter your id", id);
+            alert("Connection au reflecteur requise");
         }
     }
     websocket.onmessage = (event) => {
