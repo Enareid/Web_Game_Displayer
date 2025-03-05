@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateStyle() {
         const allPossiblePlacement = document.querySelectorAll(".possiblePlacement");
         allPossiblePlacement.forEach(tile => {
-            tile.style.backgroundColor = "white";
+            tile.style.backgroundColor = "";
             tile.classList.remove("possiblePlacement");
             tile.removeEventListener("click", place);
         });
