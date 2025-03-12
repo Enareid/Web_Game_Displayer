@@ -1,3 +1,6 @@
+import PlacementManager from "../scripts/game.js";
+const manager = new PlacementManager();
+manager.init();
 const socket = io();
 
 let id = "";
@@ -90,6 +93,21 @@ function displayMessageChat(message){
 }
 
 function displayMessage(message) {
+    if (message.includes("THROWS")) {
+        const diceDisplay = document.getElementById("DiceRoll");
+        const messageArray = message.split(" ");
+        diceDisplay.innerHTML = "";
+        for (let i = 2; i < messageArray.length; i++) {;
+            // crée des div avec les imgaes des dés
+            const diceElement = document.createElement("div");
+            const diceImage = document.createElement("img");
+            diceImage.className = "";
+            diceImage.src = `images/${messageArray[i]}.png`;
+            diceElement.appendChild(diceImage);
+            diceDisplay.appendChild(diceElement);
+        }
+        manager.setupEventListeners();
+    }
     const cmdDisplay = document.getElementById("cmd-display");
     const messageElement = document.createElement("div");
     messageElement.className = "player-message";
@@ -118,7 +136,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 )
 
 
-function sendCommand(command) {
+export function sendCommand(command) {
     if (websocket && websocket.readyState === WebSocket.OPEN) {
         websocket.send(id + ' ' + command);
     }

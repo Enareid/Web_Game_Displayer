@@ -1,169 +1,118 @@
 import PlacementHandler from "../../node_modules/@raphael-levecque/placement-handler-railroad/placementHandler.js";
+import { sendCommand } from "./ioClient.js";
 
-const ph = new PlacementHandler();
-ph.addThrow(["S","R"]);
+class PlacementManager {
+    constructor() {
+        this.ph = new PlacementHandler();
+        this.selectedImage = null;
+        this.currentRotation = 0;
+        this.currentFlip = 1;
+        this.PossiblePlacement = [];
+    }
 
-let PossiblePlacement = [];
+    init() {
+        document.addEventListener("DOMContentLoaded", () => {
+            this.setupEventListeners();
+        });
+    }
 
+    setupEventListeners() {
+        const diceImages = document.querySelectorAll("#DiceRoll img,#SpecialRoad img");
+        diceImages.forEach(img => {
+            img.addEventListener("click", (event) => this.click(event));
+        });
 
-document.addEventListener("DOMContentLoaded", () => {
-    let selectedImage = null; // Variable pour stocker l'image sélectionnée
-    let currentRotation = 0; // Variable pour suivre l'angle de rotation
-    let currentFlip = 1;
+        document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
+        document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
+    }
 
-    // Gérer le clic sur les images dans les divs de DiceRoll
-    const diceImages = document.querySelectorAll("#DiceRoll img,#SpecialRoad img");
-    diceImages.forEach(img => {
-        img.addEventListener("click", click);
-    });
-
-    function getIdFromSrc(image) {
+    getIdFromSrc(image) {
         let source = image.src;
-        let name = source.substring(source.lastIndexOf("/")+1,source.lastIndexOf("."));
-        return name.split('-').join('');;
+        let name = source.substring(source.lastIndexOf("/") + 1, source.lastIndexOf("."));
+        return name.split('-').join('');
     }
 
-    function getRotationNomenclature(rotation, flip){
-        if (flip == 1) {
-            if(rotation == 0){
-                return 'S';
-            }
-            else if(rotation == 90){
-                return 'R';
-            }
-            else if(rotation == 180){
-                return 'U';
-            }
-            else{
-                return 'L';
-            }
-        }
-        else {
-            if(rotation == 0){
-                return 'F';
-            }
-            else if(rotation == 90){
-                return 'FR';
-            }
-            else if(rotation == 180){
-                return 'FU';
-            }
-            else{
-                return 'FL';
-            }
+    getRotationNomenclature(rotation, flip) {
+        const nomenclature = {
+            1: { 0: 'S', 90: 'R', 180: 'U', 270: 'L' },
+            '-1': { 0: 'F', 90: 'FR', 180: 'FU', 270: 'FL' }
+        };
+        return nomenclature[flip][rotation];
+    }
+
+    rotateImage() {
+        if (this.selectedImage) {
+            this.currentRotation = (this.currentRotation + 90) % 360;
+            this.updateImageTransform();
+            this.updatePlacement();
         }
     }
 
-
-    // Gérer le clic sur le bouton "Rotate"
-    const rotateButton = document.getElementById("rotateButton");
-
-    rotateButton.addEventListener("click", () => {
-        rotateImage();
-    });
-
-    // Gérer le clic sur le bouton "Flip"
-    const flipButton = document.getElementById("flipButton");
-
-    flipButton.addEventListener("click", () => {
-        flipImage();
-    });
-
-    function rotateImage() {
-        if (selectedImage) {
-            // Augmente l'angle de rotation de 90° (modulo 360°)
-            currentRotation = (currentRotation + 90) % 360;
-
-            // Applique la transformation CSS pour pivoter l'image
-            selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
-            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
-            updateStyle();
-            PossiblePlacement.forEach(tile => {
-                modifStyle(tile);
-            });
+    flipImage() {
+        if (this.selectedImage) {
+            this.currentFlip = this.currentFlip === -1 ? 1 : -1;
+            this.updateImageTransform();
+            this.updatePlacement();
         }
     }
 
-    function flipImage() {
-        if (selectedImage) {
-            // Effet miroir de l'image
-            currentFlip = currentFlip == -1 ? 1 : -1;
-
-            // Applique la tranformation CSS pour pivoter l'image
-            selectedImage.style.transform = `rotate(${currentRotation}deg) scaleX(${currentFlip})`;
-            console.log(getIdFromSrc(selectedImage));
-            console.log(getRotationNomenclature(currentRotation, currentFlip));
-            PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip))
-            updateStyle();
-            PossiblePlacement.forEach(tile => {
-                modifStyle(tile);
-            });
-        }
+    updateImageTransform() {
+        this.selectedImage.style.transform = `rotate(${this.currentRotation}deg) scaleX(${this.currentFlip})`;
     }
 
-    function modifStyle(tile) {
+    updatePlacement() {
+        this.PossiblePlacement = this.ph.possiblePlacements(
+            this.getIdFromSrc(this.selectedImage),
+            this.getRotationNomenclature(this.currentRotation, this.currentFlip)
+        );
+        this.updateStyle();
+        this.PossiblePlacement.forEach(tile => this.modifStyle(tile));
+    }
+
+    modifStyle(tile) {
         const tileElement = document.getElementById(tile);
         tileElement.style.backgroundColor = "lightgreen";
         tileElement.classList.add("possiblePlacement");
-        // Gérer le clic sur les balises td de la table
-        tileElement.addEventListener("click", place);
+        tileElement.addEventListener("click", () => this.place(tileElement));
     }
 
-    function updateStyle() {
-        const allPossiblePlacement = document.querySelectorAll(".possiblePlacement");
-        allPossiblePlacement.forEach(tile => {
+    updateStyle() {
+        document.querySelectorAll(".possiblePlacement").forEach(tile => {
             tile.style.backgroundColor = "";
             tile.classList.remove("possiblePlacement");
-            tile.removeEventListener("click", place);
+            tile.removeEventListener("click", () => this.place(tile));
         });
     }
-    
-    function place() {
-        // Vérifie si une image est sélectionnée
-        if (selectedImage) {
-        // Ajoute l'image sélectionnée dans la cellule cliquée
-            this.innerHTML = ""; // Supprime tout contenu existant dans la cellule
-            this.appendChild(selectedImage);
-            sendCommand('PLACES '+getIdFromSrc(selectedImage)+' '+getRotationNomenclature(currentRotation, currentFlip)+' '+ this.id)
 
-            // Retire la sélection de l'image après son placement
-            selectedImage.classList.remove("selected");
-            updateStyle();
-            socket.emit('update board',getBoard(),id);
-            selectedImage.removeEventListener("click", click); 
+    place(tileElement) {
+        if (this.selectedImage) {
+            tileElement.innerHTML = "";
+            tileElement.appendChild(this.selectedImage);
+            sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ this.id)
+            this.selectedImage.classList.remove("selected");
+            this.updateStyle();
+            this.ph.placeTile(
+                tileElement.id,
+                this.getIdFromSrc(this.selectedImage),
+                this.getRotationNomenclature(this.currentRotation, this.currentFlip)
+            );
+            this.selectedImage.removeEventListener("click", (event) => this.click(event));
+            this.selectedImage = null;
         }
-        ph.placeTile(this.id, getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip)); 
-        selectedImage = null;
     }
 
-    function click() {
-        // Si une image est déjà sélectionnée, désélectionne-la
-        if (selectedImage) {
-            selectedImage.classList.remove("selected");
-        }
-        // Remets à 0 si l'image est null
-        if (selectedImage == null) {
-            currentRotation = 0;
-            currentFlip = 1;
+    click(event) {
+        if (this.selectedImage) {
+            this.selectedImage.classList.remove("selected");
         }
         
-        // Réinitialise la rotation de l'image précédemment sélectionnée
-        while(currentRotation != 0) {
-            rotateImage();
-        }
-        while(currentFlip != 1) {
-            flipImage();
-        }
-        // Marque l'image cliquée comme sélectionnée
-        selectedImage = event.target;
-        selectedImage.classList.add("selected");
-        PossiblePlacement = ph.possiblePlacements(getIdFromSrc(selectedImage), getRotationNomenclature(currentRotation, currentFlip));
-        console.log(PossiblePlacement);
-        updateStyle();
-        PossiblePlacement.forEach(tile => {
-            modifStyle(tile);
-        });
-
+        this.selectedImage = event.target;
+        this.selectedImage.classList.add("selected");
+        this.currentRotation = 0;
+        this.currentFlip = 1;
+        this.updateImageTransform();
+        this.updatePlacement();
     }
+}
 
-});
+export default PlacementManager;
