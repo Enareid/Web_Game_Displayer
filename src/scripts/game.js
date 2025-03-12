@@ -88,7 +88,7 @@ class PlacementManager {
         if (this.selectedImage) {
             tileElement.innerHTML = "";
             tileElement.appendChild(this.selectedImage);
-            sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ this.id)
+            sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ event.target.id)
             this.selectedImage.classList.remove("selected");
             this.updateStyle();
             this.ph.placeTile(
