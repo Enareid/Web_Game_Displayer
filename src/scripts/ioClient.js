@@ -41,9 +41,8 @@ function connect() {
         sendCommand(`ENTERS`);
     }
     websocket.onerror = () => {
-        while (id == "" || id == null) {
-            alert("Connection au reflecteur requise");
-        }
+        alert("Connection au reflecteur requise");
+        connect();
     }
     websocket.onmessage = (event) => {
         displayMessage(event.data);
