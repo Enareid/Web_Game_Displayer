@@ -25,10 +25,15 @@ export default class IOController { // Server
     }
     
     gettingBoard(socket){
-      socket.on('view board',(socketid) => this.#io.emit('send board',socketid));
+      socket.on('view board',(socketid) => {
+        this.#io.emit('send board',socketid);
+        console.log(`send board to ${socketid}`);
+      });
       socket.on("sended board",(board,socketid, id) => {
         let socketToSendTo = this.#clients.find((element) => element.id === socketid);
+        console.log(`who wanted the boards ${socketToSendTo.id}`);
         socketToSendTo.emit('print board',board, id);
+        console.log(`print the board of ${id}`);
     })
     }
 

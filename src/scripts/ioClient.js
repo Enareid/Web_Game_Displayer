@@ -17,11 +17,17 @@ socket.on('print board', (board, id) => displayBoard(board, id));
 
 socket.on('sended update board',(board,id) => displayUpdatedBoard(board,id));
 
-function displayUpdatedBoard(board,id){
-    if (valid){
-        const idBoard = document.getElementById(id);
+function displayUpdatedBoard(board,idtoChange){
+    if(idtoChange != id){
+        console.log(`i have change my board ${idtoChange}`);
+        const idBoard = document.getElementById(idtoChange);
+        const boardsDisplay = document.getElementById("boards-display");
+        boardsDisplay.removeChild(idBoard);
+        const idName = document.getElementById("name"+idtoChange);
+        boardsDisplay.removeChild(idName);
+        idName.innerHTML = "";
         if(idBoard){
-            displayBoard(board,id);
+            displayBoard(board,idtoChange);
         }
     }
 }
@@ -51,24 +57,26 @@ function connect() {
 document.addEventListener("DOMContentLoaded",() => {
     const validate = document.getElementById("validate");
     const boardsDisplay = document.getElementById('boards-display');
+    boardsDisplay.innerHTML = "";
     validate.addEventListener("click",()=> {  
-        socket.emit("view board",socket.id)
-        valid = true;
+        boardsDisplay.innerHTML = "";
+        socket.emit("view board",socket.id);
+        console.log(`view board demanded by ${socket.id}`);
         });
 });
 
 function displayBoard(board, id){
     if(board != getBoard()){
         const boardsDisplay = document.getElementById("boards-display");
-        boardsDisplay.innerHTML = "";   
         const boardName = document.createElement("div");
         const boardAdded = document.createElement("table");
         boardName.textContent = id + ' : ';
+        boardName.id = "name"+id;
         boardAdded.id = id;
         boardAdded.className = "board-";
         boardAdded.innerHTML = board;
-        boardsDisplay.appendChild(boardName);
-        boardsDisplay.appendChild(boardAdded);
+        boardsDisplay.append(boardName);
+        boardsDisplay.append(boardAdded);
     }
 }
 

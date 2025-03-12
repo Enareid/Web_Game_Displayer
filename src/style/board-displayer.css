@@ -8,17 +8,14 @@
   margin: 20px;
   position :absolute; 
   display: table-row;
-  bottom: 100px;
-  height: 150px;
-  left: 230px;
+  bottom: 25px;
+  left: 25px;
 }
 #boards-display{
 display:flex;
 flex-direction: row;
-top: 0px;
-height: 230px;
 }
 .board-{
-width: 150px;
-height: 150px;
+width: 200px;
+height: 200px;
 }
