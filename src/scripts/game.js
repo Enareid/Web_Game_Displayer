@@ -8,6 +8,7 @@ class PlacementManager {
         this.currentRotation = 0;
         this.currentFlip = 1;
         this.PossiblePlacement = [];
+        this.diceThrows = [];
     }
 
     init() {
@@ -16,6 +17,8 @@ class PlacementManager {
         });
         document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
         document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
+        document.getElementById("validate").addEventListener("click", () => this.validate());
+        this.updateThrows();
     }
 
     setupEventListeners() {
@@ -23,6 +26,7 @@ class PlacementManager {
         diceImages.forEach(img => {
             img.addEventListener("click", (event) => this.click(event));
         });
+        this.updateThrows();
     }
 
     getIdFromSrc(image) {
@@ -123,6 +127,7 @@ class PlacementManager {
             socket.emit('update board',getBoard(),id);
             this.selectedImage.removeEventListener("click", (event) => this.click(event));
             this.selectedImage = null;
+            this.updateThrows();
         }
     }
 
@@ -137,6 +142,25 @@ class PlacementManager {
         this.currentFlip = 1;
         this.updateImageTransform();
         this.updatePlacement();
+    }
+
+    validate() {
+        let possible = this.ph.possiblePlacementsRemain()
+        if (! possible) {
+            const boardsDisplay = document.getElementById('boards-display');
+            boardsDisplay.innerHTML = "";
+            socket.emit("view board",socket.id);
+        }
+    }
+
+    updateThrows(){
+        this.diceThrows = [];
+        this.ph.validate();
+        const diceImages = document.querySelectorAll("#DiceRoll img");
+        diceImages.forEach(img => {
+            this.diceThrows.push(this.getIdFromSrc(img));
+        });
+        this.ph.addThrow(this.diceThrows);
     }
 }
 

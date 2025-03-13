@@ -57,25 +57,15 @@ function connect() {
         displayMessage(event.data);
     } 
 }
-document.addEventListener("DOMContentLoaded",() => {
-    const validate = document.getElementById("validate");
-    const boardsDisplay = document.getElementById('boards-display');
-    boardsDisplay.innerHTML = "";
-    validate.addEventListener("click",()=> {  
-        boardsDisplay.innerHTML = "";
-        socket.emit("view board",socket.id);
-        console.log(`view board demanded by ${socket.id}`);
-        });
-});
 
-function displayBoard(board, id){
-    if(board != getBoard()){
+function displayBoard(board, idtoPrint){
+    if(id != idtoPrint){
         const boardsDisplay = document.getElementById("boards-display");
         const boardName = document.createElement("div");
         const boardAdded = document.createElement("table");
-        boardName.textContent = id + ' : ';
-        boardName.id = "name"+id;
-        boardAdded.id = id;
+        boardName.textContent = idtoPrint + ' : ';
+        boardName.id = "name"+idtoPrint;
+        boardAdded.id = idtoPrint;
         boardAdded.className = "board-";
         boardAdded.innerHTML = board;
         boardsDisplay.append(boardName);
