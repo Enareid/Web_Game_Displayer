@@ -1,9 +1,9 @@
 import PlacementManager from "../scripts/game.js";
 const manager = new PlacementManager();
 manager.init();
-const socket = io();
+export const socket = io();
 
-let id = "";
+export let id = "";
 
 let valid = false;
 
@@ -35,7 +35,7 @@ function displayUpdatedBoard(board,idtoChange){
     }
 }
 
-function getBoard() {
+export function getBoard() {
     let b = document.getElementById("board").innerHTML;
     return b;
 }

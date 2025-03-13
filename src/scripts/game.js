@@ -1,5 +1,5 @@
 import PlacementHandler from "../../node_modules/@raphael-levecque/placement-handler-railroad/placementHandler.js";
-import { sendCommand } from "./ioClient.js";
+import { sendCommand, getBoard, socket, id } from "./ioClient.js";
 
 class PlacementManager {
     constructor() {
@@ -120,6 +120,7 @@ class PlacementManager {
                 this.getIdFromSrc(this.selectedImage),
                 this.getRotationNomenclature(this.currentRotation, this.currentFlip)
             );
+            socket.emit('update board',getBoard(),id);
             this.selectedImage.removeEventListener("click", (event) => this.click(event));
             this.selectedImage = null;
         }
