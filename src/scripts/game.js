@@ -9,6 +9,7 @@ class PlacementManager {
         this.currentFlip = 1;
         this.PossiblePlacement = [];
         this.diceThrows = [];
+        this.special = true;
     }
 
     init() {
@@ -113,10 +114,12 @@ class PlacementManager {
     }
 
     place(tileElement) {
-        if (this.selectedImage) {
+        if (this.selectedImage && this.special) {
+            if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage)))
+                this.special = false;
             tileElement.innerHTML = "";
             tileElement.appendChild(this.selectedImage);
-            sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ event.target.id)
+            sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ tileElement.id)
             this.selectedImage.classList.remove("selected");
             this.updateStyle();
             this.ph.placeTile(
@@ -128,6 +131,12 @@ class PlacementManager {
             this.selectedImage.removeEventListener("click", (event) => this.click(event));
             this.selectedImage = null;
             this.updateThrows();
+            if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
+                const diceImages = document.querySelectorAll("#SpecialRoad img");
+                diceImages.forEach((img) => {
+                    img.removeEventListener("click", (event) => this.click(event));
+                })
+            }
         }
     }
 
@@ -150,6 +159,8 @@ class PlacementManager {
             const boardsDisplay = document.getElementById('boards-display');
             boardsDisplay.innerHTML = "";
             socket.emit("view board",socket.id);
+            sendCommand('YIELDS');
+            this.special = true;
         }
     }
 
