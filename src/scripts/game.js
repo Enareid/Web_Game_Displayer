@@ -14,6 +14,8 @@ class PlacementManager {
         document.addEventListener("DOMContentLoaded", () => {
             this.setupEventListeners();
         });
+        document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
+        document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
     }
 
     setupEventListeners() {
@@ -21,9 +23,6 @@ class PlacementManager {
         diceImages.forEach(img => {
             img.addEventListener("click", (event) => this.click(event));
         });
-
-        document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
-        document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
     }
 
     getIdFromSrc(image) {
@@ -33,11 +32,34 @@ class PlacementManager {
     }
 
     getRotationNomenclature(rotation, flip) {
-        const nomenclature = {
-            1: { 0: 'S', 90: 'R', 180: 'U', 270: 'L' },
-            '-1': { 0: 'F', 90: 'FR', 180: 'FU', 270: 'FL' }
-        };
-        return nomenclature[flip][rotation];
+        if (flip == 1) {
+            if(rotation == 0){
+                return 'S';
+            }
+            else if(rotation == 90){
+                return 'R';
+            }
+            else if(rotation == 180){
+                return 'U';
+            }
+            else{
+                return 'L';
+            }
+        }
+        else {
+            if(rotation == 0){
+                return 'F';
+            }
+            else if(rotation == 90){
+                return 'FR';
+            }
+            else if(rotation == 180){
+                return 'FU';
+            }
+            else{
+                return 'FL';
+            }
+        }
     }
 
     rotateImage() {
@@ -50,13 +72,15 @@ class PlacementManager {
 
     flipImage() {
         if (this.selectedImage) {
-            this.currentFlip = this.currentFlip === -1 ? 1 : -1;
+            this.currentFlip = this.currentFlip == -1 ? 1 : -1;
             this.updateImageTransform();
             this.updatePlacement();
         }
     }
 
     updateImageTransform() {
+        console.log(this.currentFlip);
+        console.log(this.currentRotation);
         this.selectedImage.style.transform = `rotate(${this.currentRotation}deg) scaleX(${this.currentFlip})`;
     }
 
