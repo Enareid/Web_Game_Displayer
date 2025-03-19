@@ -1,5 +1,4 @@
 import PlacementManager from "../scripts/game.js";
-import serverGestion from "./serverGestion.js";
 const manager = new PlacementManager();
 manager.init();
 export const socket = io();
@@ -7,9 +6,8 @@ export const socket = io();
 export let id = "";
 
 let valid = false;
+let serverAddr = null;
 
-
-let serv = new serverGestion();
 let websocket = null;
 
 let messageHandler = null;
@@ -20,6 +18,7 @@ socket.on('identification',() => connect());
 socket.on('chat message',(msg)=> displayMessageChat(msg));
 socket.on('send board', (socket1) => socket.emit('sended board',getBoard(),socket1, id));
 socket.on('print board', (board, id) => displayBoard(board, id));
+socket.on('get-address', (address) => { serverAddr = address; connect(); });
 
 socket.on('sended update board',(board,id) => displayUpdatedBoard(board,id));
 
@@ -44,8 +43,8 @@ export function getBoard() {
 }
 
 function connect() {
-    console.log(serv.returnAddress());
-    websocket = new WebSocket(`ws://${serv.returnAddress()}:3000`);
+
+    websocket = new WebSocket(`ws://${serverAddr}:3000`);
     websocket.onopen = () => {
         while (id == "" || id == null || !id.match(alphaExp)) {
             id = prompt("Enter your id", id);

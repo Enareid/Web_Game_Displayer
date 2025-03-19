@@ -17,7 +17,6 @@ export default class IOController { // Server
   
     setupListeners(socket) {
         this.#clients.push(socket);
-        this.connect(socket);
         socket.on('message', (msg)=> this.#io.emit('chat message',msg));
         this.gettingBoard(socket);
         socket.on('disconnect',()=> this.leave(socket));
