@@ -114,9 +114,15 @@ class PlacementManager {
     }
 
     place(tileElement) {
-        if (this.selectedImage && this.special) {
-            if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage)))
-                this.special = false;
+        if (this.selectedImage) {
+            if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
+                if (!this.special){
+                    return;
+                }
+                else {
+                    this.special = false;
+                }
+            }
             tileElement.innerHTML = "";
             tileElement.appendChild(this.selectedImage);
             sendCommand('PLACES '+this.getIdFromSrc(this.selectedImage)+' '+this.getRotationNomenclature(this.currentRotation, this.currentFlip)+' '+ tileElement.id)
