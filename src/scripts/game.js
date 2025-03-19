@@ -19,7 +19,6 @@ class PlacementManager {
         document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
         document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
         document.getElementById("validate").addEventListener("click", () => this.validate());
-        this.updateThrows();
     }
 
     setupEventListeners() {
@@ -136,7 +135,6 @@ class PlacementManager {
             socket.emit('update board',getBoard(),id);
             this.selectedImage.removeEventListener("click", (event) => this.click(event));
             this.selectedImage = null;
-            this.updateThrows();
             if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
                 const diceImages = document.querySelectorAll("#SpecialRoad img");
                 diceImages.forEach((img) => {
@@ -178,6 +176,7 @@ class PlacementManager {
             this.diceThrows.push(this.getIdFromSrc(img));
         });
         this.ph.addThrow(this.diceThrows);
+        this.special = true;
     }
 }
 
