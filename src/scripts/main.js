@@ -5,23 +5,29 @@ import {Server as IOServer} from 'socket.io';
 import RequestController from './controllers/requestController.js';
 import { networkInterfaces } from 'os';
 
-function getIPAddresses() {
 
-  var ipAddresses = [];
+var
+    // Local IP address that we're trying to calculate
+    address
+    // Provides a few basic operating-system related utility functions (built-in)
+    // Network interfaces
+    ,ifaces = networkInterfaces();
 
-  var interfaces = networkInterfaces();
-  for (var devName in interfaces) {
-      var iface = interfaces[devName];
-      for (var i = 0; i < iface.length; i++) {
-          var alias = iface[i];
-          if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
-              ipAddresses.push(alias.address);
-          }
-      }
-  }
-  return ipAddresses;
+
+// Iterate over interfaces ...
+for (var dev in ifaces) {
+
+    // ... and find the one that matches the criteria
+    var iface = ifaces[dev].filter(function(details) {
+        return details.family === 'IPv4' && details.internal === false;
+    });
+
+    if(iface.length > 0)
+        address = iface[0].address;
 }
 
+// Print the result
+console.log(address); // 10.25.10.147
 
 // Create an HTTP server
 const server = http.createServer(
@@ -34,6 +40,5 @@ const io = new IOServer(server);
 const ioController = new IOController(io);
 io.on('connection', ioController.registerSocket.bind(ioController));
 
-console.log(getIPAddresses[0]);
-server.address(getIPAddresses[0]);
+server.address(address);
 server.listen(9000);
