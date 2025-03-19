@@ -10,6 +10,7 @@ class PlacementManager {
         this.PossiblePlacement = [];
         this.diceThrows = [];
         this.special = true;
+        this.validated = false;
     }
 
     init() {
@@ -163,7 +164,10 @@ class PlacementManager {
             const boardsDisplay = document.getElementById('boards-display');
             boardsDisplay.innerHTML = "";
             socket.emit("view board",socket.id);
-            sendCommand('YIELDS');
+            if(!this.validated){
+                sendCommand('YIELDS');
+                this.validated = true;
+            }
             this.special = true;
         }
     }

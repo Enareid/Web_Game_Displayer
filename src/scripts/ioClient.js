@@ -1,5 +1,5 @@
 import PlacementManager from "../scripts/game.js";
-import address from "./main.js";
+import serverGestion from "./serverGestion.js";
 const manager = new PlacementManager();
 manager.init();
 export const socket = io();
@@ -8,6 +8,8 @@ export let id = "";
 
 let valid = false;
 
+
+let serv = new serverGestion();
 let websocket = null;
 
 let messageHandler = null;
@@ -42,7 +44,8 @@ export function getBoard() {
 }
 
 function connect() {
-    websocket = new WebSocket(`ws://${address}:3000`);
+    console.log(serv.returnAddress());
+    websocket = new WebSocket(`ws://${serv.returnAddress()}:3000`);
     websocket.onopen = () => {
         while (id == "" || id == null || !id.match(alphaExp)) {
             id = prompt("Enter your id", id);
