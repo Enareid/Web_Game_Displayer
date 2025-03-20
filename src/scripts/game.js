@@ -181,6 +181,7 @@ class PlacementManager {
         });
         this.ph.addThrow(this.diceThrows);
         this.special = true;
+        this.validated = false;
     }
 }
 
