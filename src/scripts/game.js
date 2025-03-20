@@ -11,6 +11,7 @@ class PlacementManager {
         this.diceThrows = [];
         this.special = true;
         this.validated = false;
+        this.cliked = this.click;
     }
 
     init() {
@@ -25,7 +26,7 @@ class PlacementManager {
     setupEventListeners() {
         const diceImages = document.querySelectorAll("#DiceRoll img,#SpecialRoad img");
         diceImages.forEach(img => {
-            img.addEventListener("click", (event) => this.click(event));
+            img.addEventListener("click", this.clicked);
         });
         this.updateThrows();
     }

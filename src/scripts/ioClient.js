@@ -87,6 +87,8 @@ function displayMessageChat(message){
 
 function displayMessage(message) {
     if (message.includes("THROWS")) {
+        const boardsDisplay = document.getElementById("boards-display");
+        boardsDisplay.innerHTML = "";
         const diceDisplay = document.getElementById("DiceRoll");
         const messageArray = message.split(" ");
         diceDisplay.innerHTML = "";
@@ -99,6 +101,7 @@ function displayMessage(message) {
             diceElement.appendChild(diceImage);
             diceDisplay.appendChild(diceElement);
         }
+
         manager.setupEventListeners();
     }
     const cmdDisplay = document.getElementById("cmd-display");
