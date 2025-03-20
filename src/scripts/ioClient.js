@@ -27,12 +27,12 @@ function displayUpdatedBoard(board,idtoChange){
         console.log(`i have change my board ${idtoChange}`);
         const idBoard = document.getElementById(idtoChange);
         const boardsDisplay = document.getElementById("boards-display");
-        idBoard.remove();
-        const idName = document.getElementById("name"+idtoChange);
-        idName.remove();
-        if(idBoard){
-            displayBoard(board,idtoChange);
-        }
+            idBoard.remove();
+            const idName = document.getElementById("name"+idtoChange);
+            idName.remove();
+            if(idBoard){
+                displayBoard(board,idtoChange);
+            }
     }
 }
 
@@ -66,7 +66,6 @@ function connect() {
 function displayBoard(board, idtoPrint){
     if(id != idtoPrint){
         const boardsDisplay = document.getElementById("boards-display");
-        if(boardsDisplay.innerHTML != ""){
             const boardName = document.createElement("div");
             const boardAdded = document.createElement("table");
             boardName.textContent = idtoPrint + ' : ';
@@ -76,7 +75,7 @@ function displayBoard(board, idtoPrint){
             boardAdded.innerHTML = board;
             boardsDisplay.append(boardName);
             boardsDisplay.append(boardAdded);
-        }
+        
     }
 }
 

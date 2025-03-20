@@ -163,6 +163,7 @@ class PlacementManager {
     }
 
     validate() {
+        console.log("validate est envoyer")
         let possible = this.ph.possiblePlacementsRemain()
         if (! possible) {
             const boardsDisplay = document.getElementById('boards-display');

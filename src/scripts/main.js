@@ -15,12 +15,14 @@ const io = new IOServer(server);
 const ioController = new IOController(io);
 io.on('connection', (socket) => connection(socket));
 
+let httpServer = "localhost"// serv.returnAddress();
+
 function connection(socket) {
   ioController.registerSocket(socket);
-  socket.emit('get-address', serv.returnAddress());
+  socket.emit('get-address', httpServer);
 }
 
-console.log(serv.returnAddress());
+console.log(httpServer);
 
-server.address(serv.returnAddress());
+server.address(httpServer);
 server.listen(9000);
