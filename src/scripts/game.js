@@ -104,18 +104,20 @@ class PlacementManager {
         const tileElement = document.getElementById(tile);
         tileElement.style.backgroundColor = "lightgreen";
         tileElement.classList.add("possiblePlacement");
-        tileElement.addEventListener("click", () => this.place(tileElement));
+        tileElement.addEventListener("click", this.placeHandler);
     }
 
     updateStyle() {
         document.querySelectorAll(".possiblePlacement").forEach(tile => {
             tile.style.backgroundColor = "";
             tile.classList.remove("possiblePlacement");
-            tile.removeEventListener("click", () => this.place(tile));
+            tile.removeEventListener("click", this.placeHandler);
         });
     }
 
-    place(tileElement) {
+    place(event) {
+        console.log(event.target);
+        const tileElement = event.target;
         if (this.selectedImage) {
             if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
                 if (!this.special){
@@ -137,13 +139,13 @@ class PlacementManager {
             );
             socket.emit('update board',getBoard(),id);
             this.selectedImage.removeEventListener("click", this.clikeHandler);
-            this.selectedImage = null;
             if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
                 const diceImages = document.querySelectorAll("#SpecialRoad img");
                 diceImages.forEach((img) => {
                     img.removeEventListener("click", this.clikeHandler);
                 })
             }
+            this.selectedImage = null;
         }
     }
 
@@ -180,7 +182,7 @@ class PlacementManager {
         const diceImages = document.querySelectorAll("#DiceRoll img");
         diceImages.forEach(img => {
             this.diceThrows.push(this.getIdFromSrc(img));
-        });possiblePlacement
+        });
         this.ph.addThrow(this.diceThrows);
         this.special = true;
         this.validated = false;

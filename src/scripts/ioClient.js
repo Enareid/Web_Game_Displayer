@@ -27,10 +27,9 @@ function displayUpdatedBoard(board,idtoChange){
         console.log(`i have change my board ${idtoChange}`);
         const idBoard = document.getElementById(idtoChange);
         const boardsDisplay = document.getElementById("boards-display");
-        boardsDisplay.removeChild(idBoard);
+        idBoard.remove();
         const idName = document.getElementById("name"+idtoChange);
-        boardsDisplay.removeChild(idName);
-        idName.innerHTML = "";
+        idName.remove();
         if(idBoard){
             displayBoard(board,idtoChange);
         }
@@ -53,6 +52,9 @@ function connect() {
         sendCommand(`ENTERS`);
     }
     websocket.onerror = () => {
+        if(id != "" || id != null){
+            sendCommand('LEAVES');
+        }
         alert("Connection au reflecteur requise");
         connect();
     }
@@ -64,15 +66,17 @@ function connect() {
 function displayBoard(board, idtoPrint){
     if(id != idtoPrint){
         const boardsDisplay = document.getElementById("boards-display");
-        const boardName = document.createElement("div");
-        const boardAdded = document.createElement("table");
-        boardName.textContent = idtoPrint + ' : ';
-        boardName.id = "name"+idtoPrint;
-        boardAdded.id = idtoPrint;
-        boardAdded.className = "board-";
-        boardAdded.innerHTML = board;
-        boardsDisplay.append(boardName);
-        boardsDisplay.append(boardAdded);
+        if(boardsDisplay.innerHTML != ""){
+            const boardName = document.createElement("div");
+            const boardAdded = document.createElement("table");
+            boardName.textContent = idtoPrint + ' : ';
+            boardName.id = "name"+idtoPrint;
+            boardAdded.id = idtoPrint;
+            boardAdded.className = "board-";
+            boardAdded.innerHTML = board;
+            boardsDisplay.append(boardName);
+            boardsDisplay.append(boardAdded);
+        }
     }
 }
 
