@@ -11,7 +11,8 @@ class PlacementManager {
         this.diceThrows = [];
         this.special = true;
         this.validated = false;
-        this.cliked = this.click;
+        this.clikeHandler = this.click.bind(this);
+        this.placeHandler = this.place.bind(this);
     }
 
     init() {
@@ -26,7 +27,7 @@ class PlacementManager {
     setupEventListeners() {
         const diceImages = document.querySelectorAll("#DiceRoll img,#SpecialRoad img");
         diceImages.forEach(img => {
-            img.addEventListener("click", this.clicked);
+            img.addEventListener("click", this.clikeHandler);
         });
         this.updateThrows();
     }
@@ -46,7 +47,7 @@ class PlacementManager {
                 return 'R';
             }
             else if(rotation == 180){
-                return 'U';
+                return 'U';"click"
             }
             else{
                 return 'L';
@@ -135,12 +136,12 @@ class PlacementManager {
                 this.getRotationNomenclature(this.currentRotation, this.currentFlip)
             );
             socket.emit('update board',getBoard(),id);
-            this.selectedImage.removeEventListener("click", (event) => this.click(event));
+            this.selectedImage.removeEventListener("click", this.clikeHandler);
             this.selectedImage = null;
             if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
                 const diceImages = document.querySelectorAll("#SpecialRoad img");
                 diceImages.forEach((img) => {
-                    img.removeEventListener("click", (event) => this.click(event));
+                    img.removeEventListener("click", this.clikeHandler);
                 })
             }
         }
@@ -179,7 +180,7 @@ class PlacementManager {
         const diceImages = document.querySelectorAll("#DiceRoll img");
         diceImages.forEach(img => {
             this.diceThrows.push(this.getIdFromSrc(img));
-        });
+        });possiblePlacement
         this.ph.addThrow(this.diceThrows);
         this.special = true;
         this.validated = false;
