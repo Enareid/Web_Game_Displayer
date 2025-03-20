@@ -20,7 +20,7 @@ function connection(socket) {
   socket.emit('get-address', serv.returnAddress());
 }
 
+console.log(serv.returnAddress());
 
-
-
+server.address(serv.returnAddress());
 server.listen(9000);
