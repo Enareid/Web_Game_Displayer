@@ -1,9 +1,11 @@
 import PlacementHandler from "../../node_modules/@raphael-levecque/placement-handler-railroad/placementHandler.js";
 import { sendCommand, getBoard, socket, id } from "./ioClient.js";
+import Score from "../../node_modules/@guillaume_ponsdesserre/calculate_score/score/score.js";
 
 class PlacementManager {
     constructor() {
         this.ph = new PlacementHandler();
+        this.score = new Score(this.ph.getBoard());
         this.selectedImage = null;
         this.currentRotation = 0;
         this.currentFlip = 1;
@@ -13,6 +15,7 @@ class PlacementManager {
         this.validated = false;
         this.clikeHandler = this.click.bind(this);
         this.placeHandler = this.place.bind(this);
+        this.nbTurn = 7;
     }
 
     init() {
@@ -32,6 +35,11 @@ class PlacementManager {
         this.updateThrows();
     }
 
+    countTurn() {
+        this.nbTurn --;
+        document.getElementById("nbTurn").textContent = `${this.nbTurn} Tours restants`;
+    }
+
     getIdFromSrc(image) {
         let source = image.src;
         let name = source.substring(source.lastIndexOf("/") + 1, source.lastIndexOf("."));
@@ -47,7 +55,7 @@ class PlacementManager {
                 return 'R';
             }
             else if(rotation == 180){
-                return 'U';"click"
+                return 'U';
             }
             else{
                 return 'L';
@@ -92,6 +100,7 @@ class PlacementManager {
     }
 
     updatePlacement() {
+        console.log(this.getRotationNomenclature(this.currentRotation, this.currentFlip));
         this.PossiblePlacement = this.ph.possiblePlacements(
             this.getIdFromSrc(this.selectedImage),
             this.getRotationNomenclature(this.currentRotation, this.currentFlip)
@@ -187,6 +196,13 @@ class PlacementManager {
         this.ph.addThrow(this.diceThrows);
         this.special = true;
         this.validated = false;
+    }
+
+    endGame() {
+        document.getElementById("nbTurn").textContent = `Partie terminée`;
+        console.log(this.ph.getBoard());
+        const score = this.score.calculateScore();
+        console.log(score);
     }
 }
 

@@ -10,7 +10,8 @@
   "author": "Les Informaticiens de l'informatique",
   "license": "ISC",
   "dependencies": {
-    "@raphael-levecque/placement-handler-railroad": "^1.0.6",
+    "@guillaume_ponsdesserre/calculate_score": "^1.0.0",
+    "@raphael-levecque/placement-handler-railroad": "^1.0.8",
     "prompt-sync": "^4.2.0",
     "socket.io": "^4.4.0"
   }

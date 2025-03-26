@@ -104,8 +104,11 @@ function displayMessage(message) {
             diceElement.appendChild(diceImage);
             diceDisplay.appendChild(diceElement);
         }
-
+        manager.countTurn();
         manager.setupEventListeners();
+    }
+    else if (message.includes("gamemaster LEAVES")) {
+        manager.endGame();
     }
     const cmdDisplay = document.getElementById("cmd-display");
     const messageElement = document.createElement("div");

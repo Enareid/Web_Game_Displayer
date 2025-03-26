@@ -15,7 +15,7 @@ const io = new IOServer(server);
 const ioController = new IOController(io);
 io.on('connection', (socket) => connection(socket));
 
-let httpServer = "localhost"// serv.returnAddress();
+let httpServer = serv.returnAddress()
 
 function connection(socket) {
   ioController.registerSocket(socket);
