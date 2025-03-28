@@ -17,3 +17,5 @@ else :
 ```Bash
 npm run start
 ```
+
+Be sure to have the reflector started at the same ip address, then the one printed by th server, but on the port 3000.
