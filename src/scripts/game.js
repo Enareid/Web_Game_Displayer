@@ -127,7 +127,7 @@ class PlacementManager {
     place(event) {
         console.log(event.target);
         const tileElement = event.target;
-        if (this.selectedImage) {
+        if (this.selectedImage && !this.validated) {
             if (this.ph.isSpecialTile(this.getIdFromSrc(this.selectedImage))) {
                 if (!this.special){
                     return;
@@ -172,7 +172,6 @@ class PlacementManager {
     }
 
     validate() {
-        console.log("validate est envoyer")
         let possible = this.ph.possiblePlacementsRemain()
         if (! possible) {
             const boardsDisplay = document.getElementById('boards-display');
