@@ -1,15 +1,3 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('../images/background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 100vh;
-  }
-
   #cmd-container,#chat-container {
     width: 250px;
     height: 300px;

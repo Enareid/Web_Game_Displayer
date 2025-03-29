@@ -1,11 +1,11 @@
 import * as fs from 'fs/promises';
-
 import { getContentTypeFrom }  from './contentTypeUtil.js';
 
 const BASE = 'http://localhost/';
+
 /**
-*  define a controller to retrieve static resources
-*/
+ *  define a controller to retrieve static resources
+ */
 export default class RequestController {
 
   #request;
@@ -13,9 +13,9 @@ export default class RequestController {
   #url;
 
   constructor(request, response) {
-    this.#request = request,
+    this.#request = request;
     this.#response = response;
-    this.#url = new URL(this.request.url,BASE).pathname;   // on ne considère que le "pathname" de l'URL de la requête
+    this.#url = new URL(this.request.url, BASE).pathname; // on ne considère que le "pathname" de l'URL de la requête
   }
 
   get response() {
@@ -29,28 +29,28 @@ export default class RequestController {
   }
 
   async handleRequest() {
-    this.response.setHeader("Content-Type" , getContentTypeFrom(this.url) );
+    this.response.setHeader("Content-Type", getContentTypeFrom(this.url));
     await this.buildResponse();
     this.response.end();
   }
 
   /**
-  * send the requested resource as it is, if it exists, else responds with a 404
-  */
-  async buildResponse()  {
+   * Send the requested resource as it is, if it exists, else respond with a 404
+   */
+  async buildResponse() {
+    let filePath = `.${this.url}`;
+    if (this.url === '/') {
+      filePath = './index.html';
+    }
     try {
-      // check if resource is available
-      await fs.access(`.${this.url}`);
-      // read the requested resource content
-      const data = await fs.readFile(`.${this.url}`);
-      // send resource content
+      await fs.access(filePath);
+      const data = await fs.readFile(filePath);
       this.response.statusCode = 200;
       this.response.write(data);
     }
-    catch(err) { // resource is not available
+    catch (err) {
       this.response.statusCode = 404;
-      this.response.write('erreur');
+      this.response.write('Erreur 404: Page non trouvée');
     }
   }
-
 }

@@ -1,3 +1,15 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+}
+
 table {
   background-size: 100%;
   background-repeat: no-repeat;
@@ -145,8 +157,7 @@ img {
 }
 
 #dices {
-    display: flex; /* Utiliser flexbox pour organiser les enfants */
-    
+    display: flex;
 }
 
 #dices > div >div{
