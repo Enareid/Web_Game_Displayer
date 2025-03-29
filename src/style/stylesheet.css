@@ -120,7 +120,25 @@ img {
 
 #rotateButton {
   position: absolute; 
-  top: 50%; 
+  top: 55%; 
+  transform: translateY(-50%); 
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#flipButton {
+  position: absolute; 
+  top: 55%; 
+  left: 60px;
+  transform: translateY(-50%); 
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#validate {
+  position: absolute; 
+  top: 55%; 
+  left: 100px;
   transform: translateY(-50%); 
   border-radius: 5px;
   cursor: pointer;
