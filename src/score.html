@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement des Scores</title>
+    <link rel="stylesheet" href="./style/score.css">
+</head>
+<body>
+
+    <div class="tabs">
+        <div class="tab" data-tab="total-score">Total Score</div>
+        <div class="tab" data-tab="center-tiles">Center Tiles</div>
+        <div class="tab" data-tab="dead-ends">Dead Ends</div>
+        <div class="tab" data-tab="connected-exits">Connected Exits</div>
+        <div class="tab" data-tab="longest-road">Longest Road</div>
+        <div class="tab" data-tab="longest-rail">Longest Rail</div>
+    </div>
+
+    <div id="total-score" class="tab-content active">
+        <h3>Total Score</h3>
+        <table id="total-score-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="center-tiles" class="tab-content">
+        <h3>Center Tiles</h3>
+        <table id="center-tiles-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="dead-ends" class="tab-content">
+        <h3>Dead Ends</h3>
+        <table id="dead-ends-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="connected-exits" class="tab-content">
+        <h3>Connected Exits</h3>
+        <table id="connected-exits-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="longest-road" class="tab-content">
+        <h3>Longest Road</h3>
+        <table id="longest-road-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="longest-rail" class="tab-content">
+        <h3>Longest Rail</h3>
+        <table id="longest-rail-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./scripts/score.js"></script>
+</body>
+</html>
