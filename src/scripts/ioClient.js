@@ -116,7 +116,7 @@ function displayMessage(message) {
         button.textContent = "Scores";
         button.className = "button";
         button.addEventListener("click", () => {
-            window.location.href = "/scores.html";
+            window.location.href = "/src/score.html";
         });
         const messageElement = document.createElement("div");
         messageElement.className = "player-message";

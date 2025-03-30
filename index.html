@@ -10,6 +10,7 @@
     <div class="container">
         <h1>Bienvenue sur RailRoad Ink</h1>
         <button onclick="location.href='src/index.html'">Jouer</button>
+        <button id="watchBtn">Regarder</button>
     </div>
 
     <div class="rules">
@@ -21,5 +22,12 @@
     <div class="credits">
         <a href="src/credits.html">Voir les crédits</a>
     </div>
+
+    <script>
+    const baseUrl = window.location.protocol + "//" + window.location.hostname + ":9090";
+    document.getElementById("watchBtn").onclick = function () {
+        window.location.href = baseUrl + "/src/index.html";
+    };
+    </script>
 </body>
 </html>
