@@ -1,16 +1,7 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-image: url('../images/background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: 100vh;
-}
-
-table {
+#board {
+  width: 500px;
+  height: 500px;
+  table-layout: fixed;
   background-size: 100%;
   background-repeat: no-repeat;
   border-collapse: collapse;
@@ -19,6 +10,15 @@ table {
   letter-spacing: 1px;
   margin-left: auto;
   margin-right: auto;
+}
+
+td {
+  width: calc(500px / 9);  /* 9 colonnes dans le tableau */
+  height: calc(500px / 9); /* 9 lignes dans le tableau */
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid gray;
 }
 
 td#BorderTop, td#BorderLeft, td#BorderBottom, td#BorderRight {
@@ -102,14 +102,6 @@ td#G1, td#G2,td#G3,td#G4 ,td#G5,td#G6,td#G7{
   border-right: 2px solid black;
 }
 
-
-td  {
-  text-align: center;
-  position: relative;
-  margin: 0 auto;
-  border: 1px solid gray;
-}
-
 #DiceRoll img , #SpecialRoad img{
 top: 0;
 left: 0;
@@ -157,7 +149,8 @@ img {
 }
 
 #dices {
-    display: flex;
+    display: flex; /* Utiliser flexbox pour organiser les enfants */
+    
 }
 
 #dices > div >div{
@@ -166,4 +159,30 @@ img {
 
 .selected {
     border: 2px solid red;
+}
+
+@media (max-width: 768px) {
+  #board {
+    width: 90vw;  /* 90% de la largeur de l'écran */
+    height: 90vw; /* Même valeur pour largeur et hauteur = carré */
+    max-width: 500px; /* Ne dépasse jamais la taille de base */
+    max-height: 500px;
+  }
+  
+  td {
+    width: calc(90vw / 9);
+    height: calc(90vw / 9);
+  }
+}
+
+@media (max-width: 480px) {
+  #board {
+    width: 95vw;
+    height: 95vw;
+  }
+  
+  td {
+    width: calc(95vw / 9);
+    height: calc(95vw / 9);
+  }
 }

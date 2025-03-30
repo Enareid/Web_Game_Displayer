@@ -51,11 +51,23 @@ function displayMessage(message) {
         const score = parseInt(parts[3]);
         updateScores(category, playerId, score);
     }
+    if (parts.length === 7 && parts[0] === 'referee' && parts[1] === 'SCORES' && parts[3] === 'minus') {
+        const category = parts[4]+'-'+parts[5];
+        const playerId = parts[2];
+        const score = parseInt(parts[6]);
+        updateScores(category, playerId, -score);
+    }
     else if (parts.length === 7 && parts[0] === 'referee' && parts[1] === 'SCORES') {
         const category = parts[5]+'-'+parts[6];
         const playerId = parts[2];
         const score = parseInt(parts[3]);
         updateScores(category, playerId, score);
+    }
+    else if (parts.length === 8 && parts[0] === 'referee' && parts[1] === 'SCORES' && parts[3] === 'minus') {
+        const category = parts[5]+'-'+parts[6];
+        const playerId = parts[2];
+        const score = parseInt(parts[7]);
+        updateScores(category, playerId, -score);
     }
     else if (parts.length === 4 && parts[0] === 'referee' && parts[1] === 'SCORES' && parts[3] === 'disqualified') {
         const playerId = parts[2];

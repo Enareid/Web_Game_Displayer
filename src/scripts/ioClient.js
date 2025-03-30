@@ -89,7 +89,7 @@ function displayMessageChat(message){
 }
 
 function displayMessage(message) {
-    if (message.includes("THROWS")) {
+    if (message.includes("THROWS") && !message.includes("referee")) {
         const boardsDisplay = document.getElementById("boards-display");
         boardsDisplay.innerHTML = "";
         const diceDisplay = document.getElementById("DiceRoll");

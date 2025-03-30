@@ -16,6 +16,15 @@ display:flex;
 flex-direction: row;
 }
 .board-{
-width: 200px;
-height: 200px;
+width: 250px;
+height: 250px;
+}
+
+.board- td {
+  width: calc(50px / 9);  /* 9 colonnes dans le tableau */
+  height: calc(50px / 9); /* 9 lignes dans le tableau */
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid gray;
 }
