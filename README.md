@@ -18,4 +18,10 @@ else :
 npm run start
 ```
 
-Make sure to have the reflector started at the same ip address on port 3000.
+Make sure to have the reflector started at the same ip address on port 3000. Then you can access the page at the following address : 
+
+```
+IPAddress:9000/
+```
+
+Where IPAddress, is the IP address of your machine.
