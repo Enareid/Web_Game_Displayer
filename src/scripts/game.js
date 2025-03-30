@@ -206,8 +206,8 @@ class PlacementManager {
     }
 
     pageScore() {
-        const baseUrl = window.location.protocol + "//" + window.location.hostname + ":9090";
-        window.location.href = baseUrl + "/src/index.html";
+        const baseUrl = window.location.protocol + "//" + window.location.hostname + ":9000";
+        window.location.href = baseUrl + "/src/score.html";
     }
 }
 
