@@ -148,6 +148,16 @@ img {
   cursor: pointer;
 }
 
+#score {
+  position: absolute; 
+  top: 55%; 
+  right: 10px;
+  transform: translateY(-50%); 
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
 #dices {
     display: flex; /* Utiliser flexbox pour organiser les enfants */
     
