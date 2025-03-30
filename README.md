@@ -18,4 +18,4 @@ else :
 npm run start
 ```
 
-Be sure to have the reflector started at the same ip address, then the one printed by th server, but on the port 3000.
+Make sure to have the reflector started at the same ip address on port 3000.
