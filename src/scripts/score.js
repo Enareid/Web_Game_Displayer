@@ -52,9 +52,9 @@ function displayMessage(message) {
         updateScores(category, playerId, score);
     }
     if (parts.length === 7 && parts[0] === 'referee' && parts[1] === 'SCORES' && parts[3] === 'minus') {
-        const category = parts[4]+'-'+parts[5];
+        const category = parts[5]+'-'+parts[6];
         const playerId = parts[2];
-        const score = parseInt(parts[6]);
+        const score = parseInt(parts[4]);
         updateScores(category, playerId, -score);
     }
     else if (parts.length === 7 && parts[0] === 'referee' && parts[1] === 'SCORES') {
