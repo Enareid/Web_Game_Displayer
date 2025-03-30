@@ -25,6 +25,7 @@ class PlacementManager {
         document.getElementById("rotateButton").addEventListener("click", () => this.rotateImage());
         document.getElementById("flipButton").addEventListener("click", () => this.flipImage());
         document.getElementById("validate").addEventListener("click", () => this.validate());
+        document.getElementById("score").addEventListener("click", () => this.pageScore());
     }
 
     setupEventListeners() {
@@ -202,6 +203,11 @@ class PlacementManager {
         console.log(this.ph.getBoard());
         const score = this.score.calculateScore();
         console.log(score);
+    }
+
+    pageScore() {
+        const baseUrl = window.location.protocol + "//" + window.location.hostname + ":9090";
+        window.location.href = baseUrl + "/src/index.html";
     }
 }
 

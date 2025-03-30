@@ -111,20 +111,6 @@ function displayMessage(message) {
     }
     else if (message.includes("gamemaster LEAVES")) {
         manager.endGame();
-        /* crée un boutton pour aller vers la page des scores */
-        const button = document.createElement("button");
-        button.textContent = "Scores";
-        button.className = "button";
-        button.addEventListener("click", () => {
-            window.location.href = "/src/score.html";
-        });
-        const messageElement = document.createElement("div");
-        messageElement.className = "player-message";
-        messageElement.textContent = "The game is over";
-        messageElement.appendChild(button);
-        const cmdDisplay = document.getElementById("cmd-display");
-        cmdDisplay.appendChild(messageElement);
-        cmdDisplay.scrollTop = cmdDisplay.scrollHeight;
     }
     const cmdDisplay = document.getElementById("cmd-display");
     const messageElement = document.createElement("div");
