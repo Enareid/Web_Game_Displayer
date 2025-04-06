@@ -1,6 +1,5 @@
 import PlacementManager from "../scripts/game.js";
 const manager = new PlacementManager();
-manager.init();
 export const socket = io();
 
 export let id = "";
@@ -13,6 +12,8 @@ let websocket = null;
 let messageHandler = null;
 
 let alphaExp = /^[a-zA-z0-9]+$/;
+
+let start = false;
 
 let banID = ["gamemaster", "referee"];
 
@@ -44,7 +45,6 @@ export function getBoard() {
 }
 
 function connect() {
-
     websocket = new WebSocket(`ws://${serverAddr}:3000`);
     websocket.onopen = () => {
     }
@@ -87,6 +87,10 @@ function displayMessageChat(message){
 
 function displayMessage(message) {
     if (message.includes("THROWS") && !message.includes("referee")) {
+        if (start == false) {
+            manager.init();
+            start = true;
+        }
         const boardsDisplay = document.getElementById("boards-display");
         boardsDisplay.innerHTML = "";
         const diceDisplay = document.getElementById("DiceRoll");
