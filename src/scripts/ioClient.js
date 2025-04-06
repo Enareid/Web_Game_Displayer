@@ -47,11 +47,6 @@ function connect() {
 
     websocket = new WebSocket(`ws://${serverAddr}:3000`);
     websocket.onopen = () => {
-        while (id == "" || id == null || !id.match(alphaExp) || banID.includes(id)) {
-            id = prompt("Enter your id", id);
-        }
-        console.log('Connected to server');
-        sendCommand(`ENTERS`);
     }
     websocket.onerror = () => {
         if(id != "" || id != null){
@@ -111,6 +106,13 @@ function displayMessage(message) {
     }
     else if (message.includes("gamemaster LEAVES")) {
         manager.endGame();
+    }
+    else if (message.includes("referee ENTERS")) {
+        while (id == "" || id == null || !id.match(alphaExp) || banID.includes(id)) {
+            id = prompt("Enter your id", id);
+        }
+        console.log('Connected to server');
+        sendCommand(`ENTERS`);
     }
     const cmdDisplay = document.getElementById("cmd-display");
     const messageElement = document.createElement("div");
